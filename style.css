@@ -1,0 +1,423 @@
+/* style.css - Versão Otimizada para Iframe */
+
+/* Reset e Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+    color: #ffffff;
+    overflow-x: hidden; /* Garante que não haverá barra de rolagem horizontal indesejada */
+    scroll-behavior: smooth;
+    position: relative;
+}
+
+/* Efeito de partículas de fundo */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(120, 200, 255, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: float 20s ease-in-out infinite;
+}
+
+/* @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(1deg); }
+} */
+
+/* === BODY do index.html - Container principal === */
+body {
+    display: flex;
+    flex-direction: column; /* Organiza header e iframe em coluna */
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Moderno com Glassmorphism - FIXO NO TOPO */
+header {
+    position: fixed; /* FIXA O HEADER NO TOPO */
+    top: 0; /* Alinha ao topo da viewport */
+    left: 0; /* Alinha à esquerda da viewport */
+    width: 100%; /* Ocupa toda a largura */
+    z-index: 1000; /* Garante que o header fique ACIMA de TUDO */
+    background: rgba(0, 0, 0, 0.1);
+    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(40px);
+    border-bottom: 1px solid rgba(230, 21, 21, 0.1);
+    padding: 15px 24px;
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* Inclui padding no width */
+    display: flex; /* Para logo à esquerda e navegação à direita */
+    align-items: center; /* Alinha itens verticalmente */
+    justify-content: space-between; /* LOGO À ESQUERDA, NAV À DIREITA */
+}
+
+header:hover {
+    background: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Garante que o conteúdo dentro do header respeite um max-width, se desejar */
+.header-content { /* Pode remover este div se o header já for flex */
+    /* Se o header já tem display flex e justify-content space-between,
+       este .header-content pode ser redundante, ou você pode usá-lo
+       para limitar a largura do conteúdo dentro do header */
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 16px; /* Espaçamento entre logo e texto, se houver */
+}
+
+/* Estilo para a imagem do logo SKF */
+.skf-actual-logo {
+    height: 48px; /* Altura do logo */
+    width: auto;
+    display: block;
+}
+
+/* Estilo para o texto do logo SKF, se usado */
+.skf-text-logo {
+    font-size: 36px; /* Ajuste conforme a imagem fornecida */
+    font-weight: 700;
+    color: white;
+    letter-spacing: 2px;
+    line-height: 1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Navegação */
+nav {
+    display: flex;
+    gap: 12px;
+}
+
+nav button {
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+nav button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+nav button:hover::before {
+    left: 100%;
+}
+
+nav button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+nav button:active {
+    transform: translateY(0);
+}
+
+/* === IFRAME - Ajuste para ficar abaixo do header === */
+#conteudo {
+    flex-grow: 1; /* Permite que o iframe ocupe o espaço restante */
+    width: 100%;
+    border: none;
+    margin-top: 78px; /* Altura do header (aprox. 15px top + 15px bottom + 48px logo height)
+                          Ajuste este valor se o header tiver altura diferente */
+    display: block; /* Garante que o iframe ocupe o espaço corretamente */
+    height: calc(100vh - 78px); /* Calcula a altura restante da viewport */
+    /* A altura pode precisar de ajuste fino dependendo do padding real do header */
+}
+
+
+/* === ESTILOS PARA AS PÁGINAS DENTRO DO IFRAME (home.html, apresentacoes.html, etc.) === */
+
+/* BODY DAS PÁGINAS DENTRO DO IFRAME */
+/* Importante: Estas regras só se aplicam se o CSS estiver linkado DENTRO do iframe também */
+/* As páginas dentro do iframe não precisam de header, body::before, etc. */
+/* O body DENTRO DO IFRAME deve ter: */
+body {
+    /* Remover min-height: 100vh; se o conteúdo não for tão grande */
+    min-height: auto; /* Deixa o body do iframe ajustar sua altura ao conteúdo */
+    background: none; /* Remove o background do body do iframe para não sobrescrever o do index.html */
+    color: #ffffff; /* Mantém a cor do texto */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza conteúdo horizontalmente */
+    padding: 24px; /* Padding para o conteúdo do iframe */
+    padding-top: 0; /* Não precisa de padding-top extra, pois o iframe já tem margin-top */
+}
+
+
+/* Título Principal (h1) dentro das páginas do iframe */
+.main-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 350px;
+    margin-bottom: 1px;
+    background: linear-gradient(135deg, #ffffff, #a0a0ff, rgba(0, 0, 254, 1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    /*animation: titleGlow 3s ease-in-out infinite alternate;*/
+    text-align: center;
+    width: 100%;
+    max-width: 1600px; /* Limita a largura do título, se desejar */
+    margin-left: auto; /* Centraliza o bloco do título */
+    margin-right: auto; /* Centraliza o bloco do título */
+}
+
+@keyframes titleGlow {
+    from { filter: drop-shadow(0 0 20px rgba(160, 160, 255, 0.5)); }
+    to { filter: drop-shadow(0 0 30px rgba(255, 128, 176, 0.7)); }
+}
+
+.subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* === CARROSSEL GERAL (Para Home e Subpáginas - o "antigo" que funciona) === */
+.carrossel-container,
+.index-carrossel-container { /* Unificado para usar o mesmo estilo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1600px;
+    margin: 20px auto; /* Centraliza o carrossel horizontalmente */
+    position: relative;
+    background-color: #222;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+    max-height: 800px; /* Limite a altura do container do carrossel */
+}
+
+.carrossel-item,
+.index-carrossel-item {
+    max-width: 1600px;
+    max-height: 750px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.carrossel-item img,
+.carrossel-item video,
+.index-carrossel-item img,
+.index-carrossel-item video {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+.carrossel-button,
+.index-carrossel-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    top: 50%;
+    position: absolute;
+    transform: translateY(-50%);
+    z-index: 10;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.carrossel-button.prev,
+.index-carrossel-button.prev {
+    left: 10px;
+}
+
+.carrossel-button.next,
+.index-carrossel-button.next {
+    right: 10px;
+}
+
+.carrossel-button:hover,
+.index-carrossel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.carrossel-info,
+.index-carrossel-info {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+/* Estatísticas e outros elementos adicionais (se usados na home ou outras páginas) */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 64px;
+    width: 100%;
+    max-width: 600px;
+    animation: fadeIn 0.5s ease-out 1s both;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.stat-item {
+    text-align: center;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #3b82f6, rgba(0, 0, 254, 1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header {
+        padding: 10px 16px;
+    }
+
+    .header-content {
+        flex-direction: column; /* Empilha logo e nav em telas menores */
+        gap: 10px;
+    }
+
+    nav {
+        gap: 8px;
+        flex-wrap: wrap; /* Permite que os botões quebrem a linha */
+        justify-content: center;
+    }
+
+    nav button {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    #conteudo {
+        margin-top: 120px; /* Ajusta se o header empilhar e ficar mais alto */
+        height: calc(100vh - 120px);
+    }
+
+    .main-title {
+        font-size: 2.5rem;
+    }
+
+    .carrossel-container,
+    .index-carrossel-container {
+        padding: 10px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    nav button {
+        width: 100%; /* Botões ocupam a largura total em telas muito pequenas */
+    }
+
+    .carrossel-button,
+    .index-carrossel-button {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+    }
+}
+
+/* Animações e Scrollbar customizada (mantidos) */
+.animate-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
+.animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+.loading { animation: shimmer 2s ease-in-out infinite; }
+@keyframes shimmer { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.1); }
+::-webkit-scrollbar-thumb { background: linear-gradient(135deg, rgba(120, 119, 198, 0.8), rgba(0, 0, 254, 0.8)); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(135deg, rgba(120, 119, 198, 1), rgba(0, 0, 254, 1)); }

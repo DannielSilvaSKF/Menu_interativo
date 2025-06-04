@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Novidades</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <h1 class="main-title">Novidades</h1>
+  <div class="carrossel-container">
+    <button class="carrossel-button prev" id="prevBtn">&#10094;</button>
+    <div class="carrossel-item" id="carrosselItem"></div>
+    <button class="carrossel-button next" id="nextBtn">&#10095;</button>
+  </div>
+
+  <div class="carrossel-info" id="carrosselInfo"></div>
+
+  <script src="../script.js"></script>
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+        initCarrossel("Novidades"); // Chama com a pasta específica para este arquivo, ou seja se trocar utilizar nome da pasta
+    });
+  </script>
+</body>
+</html>

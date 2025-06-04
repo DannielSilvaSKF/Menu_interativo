@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Página Inicial</title>
+    <link rel="stylesheet" href="../style.css" />
+    
+</head>
+<body>
+    <h1 class="main-title">Avisos semanais</h1>
+    <div class="index-carrossel-container">
+        <button class="index-carrossel-button prev" id="indexPrevBtn">&#10094;</button>
+        <div class="index-carrossel-item" id="indexCarrosselItem"></div>
+        <button class="index-carrossel-button next" id="indexNextBtn">&#10095;</button>
+    </div>
+    <div class="index-carrossel-info" id="indexCarrosselInfo"></div>
+    <script>
+        // Lista de arquivos para o carrossel do index.html, tela inicial
+        // Os caminhos são relativos ao index.html
+        const indexCarrosselFiles = [
+            "../Avisos/slide1.png", //
+            "../Avisos/slide2.png", //
+            "../Avisos/slide3.png", // 
+            "../Avisos/slide4.png", //
+            "../Avisos/slide5.png", // 
+            "../Avisos/slide4.png", //
+            "../Avisos/slide6.png", //
+            "../Avisos/slide7.png", // 
+            "../Avisos/slide8.png", //
+            "../Avisos/slide9.png", // 
+            "../Avisos/slide10.png", //
+            "../Avisos/slide12.png", //
+            "../Avisos/slide13.png", // 
+            "../Avisos/slide14.png", //
+            "../Avisos/slide15.png" // 
+            // Adicione mais caminhos de arquivos conforme desejar, seguindo o padrão a cima
+        ];
+
+        const indexCarrosselItem = document.getElementById("indexCarrosselItem");
+        const indexPrevBtn = document.getElementById("indexPrevBtn");
+        const indexNextBtn = document.getElementById("indexNextBtn");
+        const indexCarrosselInfo = document.getElementById("indexCarrosselInfo");
+
+        let indexCurrentIndex = 0;
+        let autoplayInterval;
+        const autoplayDelay = 5000; // Tempo em milissegundos (5 segundos)
+
+        function displayIndexMedia() {
+            if (indexCarrosselFiles.length === 0) {
+                indexCarrosselItem.innerHTML = "<p>Nenhum item para exibir no carrossel principal.</p>";
+                indexCarrosselInfo.textContent = "";
+                indexPrevBtn.disabled = true;
+                indexNextBtn.disabled = true;
+                stopAutoplay(); // Parar autoplay se não houver itens
+                return;
+            }
+
+            const filePath = indexCarrosselFiles[indexCurrentIndex];
+            const ext = filePath.split('.').pop().toLowerCase();
+            
+            // Parar todos os vídeos antes de exibir o próximo item
+            const currentVideo = indexCarrosselItem.querySelector('video');
+            if (currentVideo) {
+                currentVideo.pause();
+                currentVideo.currentTime = 0; // Opcional: Reiniciar o vídeo
+            }
+
+            indexCarrosselItem.innerHTML = ''; // Limpa o conteúdo anterior
+
+            if (["jpg", "jpeg", "png", "gif"].includes(ext)) {
+                const img = document.createElement("img");
+                img.src = filePath;
+                img.alt = `Slide ${indexCurrentIndex + 1}`;
+                indexCarrosselItem.appendChild(img);
+            } else if (["mp4", "webm"].includes(ext)) {
+                const video = document.createElement("video");
+                video.src = filePath;
+                video.controls = false; // Sem controles visíveis para uma transição mais limpa
+                video.autoplay = true;  // AUTO-PLAY AQUI
+                video.loop = false;
+                video.muted = true; // Opcional: Iniciar mudo para evitar surpresas com áudio
+                indexCarrosselItem.appendChild(video);
+
+                // Pausa o carrossel automático enquanto o vídeo toca
+                video.addEventListener('play', stopAutoplay);
+                // Reinicia o autoplay quando o vídeo termina
+                video.addEventListener('ended', startAutoplay); 
+            } else {
+                indexCarrosselItem.innerHTML = `<p>Formato não suportado para este item: ${filePath}</p>`;
+            }
+
+            indexCarrosselInfo.textContent = `${indexCurrentIndex + 1} de ${indexCarrosselFiles.length}`;
+            indexPrevBtn.disabled = indexCurrentIndex === 0 && !autoplayInterval; // Desativa se for o primeiro E não estiver em autoplay (para navegação manual)
+            indexNextBtn.disabled = indexCurrentIndex === indexCarrosselFiles.length - 1 && !autoplayInterval; // Desativa se for o último E não estiver em autoplay
+        }
+
+        function startAutoplay() {
+            clearInterval(autoplayInterval); 
+            autoplayInterval = setInterval(() => {
+                indexCurrentIndex = (indexCurrentIndex + 1) % indexCarrosselFiles.length; 
+                displayIndexMedia();
+            }, autoplayDelay);
+        }
+
+        function stopAutoplay() {
+            clearInterval(autoplayInterval);
+        }
+
+        // Event Listeners para os botões manuais do carrossel do index.html
+        indexPrevBtn.addEventListener("click", () => {
+            stopAutoplay(); // Para o autoplay ao navegar manualmente
+            if (indexCurrentIndex > 0) {
+                indexCurrentIndex--;
+            } else {
+                indexCurrentIndex = indexCarrosselFiles.length - 1; // Volta ao final
+            }
+            displayIndexMedia();
+            startAutoplay(); // Reinicia o autoplay após a navegação manual
+        });
+
+        indexNextBtn.addEventListener("click", () => {
+            stopAutoplay(); // Para o autoplay ao navegar manualmente
+            if (indexCurrentIndex < indexCarrosselFiles.length - 1) {
+                indexCurrentIndex++;
+            } else {
+                indexCurrentIndex = 0; // Volta ao início
+            }
+            displayIndexMedia();
+            startAutoplay(); // Reinicia o autoplay após a navegação manual
+        });
+
+        // Inicia o carrossel do index.html quando a página é carregada
+        window.addEventListener("DOMContentLoaded", () => {
+            displayIndexMedia(); // Exibe o primeiro item imediatamente
+            startAutoplay(); // Inicia o autoplay
+        });
+    </script>
+</body>
+</html>

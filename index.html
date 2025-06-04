@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu Principal</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+        // Função para carregar páginas no iframe
+        function carregar(pagina, pastaConteudo = '') {
+            let url = pagina;
+            if (pastaConteudo) {
+                // Adiciona o parâmetro de URL para o script.js dentro do iframe
+                url += `?pasta=${pastaConteudo}`;
+            }
+            document.getElementById("conteudo").src = url;
+        }
+  </script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="logos/image.png" alt="Logo SKF" class="skf-actual-logo">
+                </div>
+            <nav>
+                <button onclick="carregar('pages/apresentacoes.html', 'Apresentações')">Apresentações</button>
+                <button onclick="carregar('pages/novidades.html', 'Novidades')">Novidades</button>
+                <button onclick="carregar('pages/resultados.html', 'Resultados')">Resultados</button>
+                <button onclick="carregar('pages/home.html')">Home</button>
+            </nav>
+        </div>
+    </header>
+
+    <iframe id="conteudo" src="pages/home.html" title="Conteúdo das Páginas"></iframe>
+
+    </body>
+</html>
